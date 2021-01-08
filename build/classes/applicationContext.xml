@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+ 
+	
+	<bean id="datasource" class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/mydb"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="Haoxing0001"></property>
+	</bean>
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="datasource"/>
+		<property name="configLocation" value="classpath:conf.xml"/>   
+		<!-- 
+		<property name="mapperLocations" value="com/skmisk/todolist/mapper/*.xml"/> -->
+	</bean>
+		 
+	<!--  
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+		<property name="basePackage" value="com.skmisk.todolist.mapper"/>
+	</bean>
+	 -->
+	<bean id="userService" class="com.skmisk.todolist.service.UserServiceImpl">
+		<property name="userMapper" ref="userMapper"></property>
+	</bean>
+	
+	<bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+		<property name="mapperInterface" value="com.skmisk.todolist.mapper.UserMapper"></property>
+	</bean>
+	
+	<bean id="taskService" class="com.skmisk.todolist.service.TaskServiceImpl">
+		<property name="taskMapper" ref="taskMapper"></property>
+	</bean>
+	
+	<bean id="taskMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+		<property name="mapperInterface" value="com.skmisk.todolist.mapper.TaskMapper"></property>
+	</bean>
+	
+	<bean id="User" class="com.skmisk.todolist.entity.User" scope = "singleton">
+		<property name="name" value="testname"></property>
+	</bean>
+</beans>
