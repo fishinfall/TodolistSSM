@@ -1,8 +1,11 @@
 package com.skmisk.todolist.service;
 
+import java.util.List;
+
+import com.skmisk.todolist.entity.Task;
 import com.skmisk.todolist.mapper.TaskMapper;
 
-public class TaskServiceImpl implements ITaskService{
+public class TaskServiceImpl implements TaskService{
 	TaskMapper taskMapper;
 
 	public TaskMapper getTaskMapper() {
@@ -16,5 +19,21 @@ public class TaskServiceImpl implements ITaskService{
 	public void markFinishById(int taskId) {
 		this.taskMapper.markFinishById(taskId);
 	}
+	
+	public void deleteTask(int taskId) {
+		this.taskMapper.deleteTask(taskId);
+	}
+	
+	public void saveTask(Task task) {
+		this.taskMapper.saveTask(task);
+	}
+	public List<Task> queryTasksByUserId(int id){
+		return this.taskMapper.queryTasksByUserId(id);
+	}
+	public List<Task> queryTasksByUsername(String username){
+		return this.taskMapper.queryTasksByUsername(username);
+	}
+	
+	
 	
 }

@@ -2,47 +2,109 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
- 
-	
-	<bean id="datasource" class="org.apache.commons.dbcp2.BasicDataSource">
-		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
+
+
+	<bean id="datasource"
+		class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName"
+			value="com.mysql.cj.jdbc.Driver"></property>
 		<property name="url" value="jdbc:mysql://localhost:3306/mydb"></property>
 		<property name="username" value="root"></property>
 		<property name="password" value="Haoxing0001"></property>
 	</bean>
-	
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="datasource"/>
-		<property name="configLocation" value="classpath:conf.xml"/>   
-		<!-- 
-		<property name="mapperLocations" value="com/skmisk/todolist/mapper/*.xml"/> -->
+
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="datasource" />
+		<!-- <property name="configLocation" value="classpath:conf.xml"/> <property 
+			name="mapperLocations" value="com/skmisk/todolist/mapper/*.xml"/> -->
 	</bean>
-		 
-	<!--  
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
-		<property name="basePackage" value="com.skmisk.todolist.mapper"/>
-	</bean>
-	 -->
-	<bean id="userService" class="com.skmisk.todolist.service.UserServiceImpl">
+
+	<!-- <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"> <property 
+		name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property> <property 
+		name="basePackage" value="com.skmisk.todolist.mapper"/> </bean> -->
+	<bean id="userService"
+		class="com.skmisk.todolist.service.UserServiceImpl">
 		<property name="userMapper" ref="userMapper"></property>
 	</bean>
-	
-	<bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+
+	<bean id="userMapper"
+		class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
-		<property name="mapperInterface" value="com.skmisk.todolist.mapper.UserMapper"></property>
+		<property name="mapperInterface"
+			value="com.skmisk.todolist.mapper.UserMapper"></property>
 	</bean>
-	
-	<bean id="taskService" class="com.skmisk.todolist.service.TaskServiceImpl">
+
+	<bean id="taskService"
+		class="com.skmisk.todolist.service.TaskServiceImpl">
 		<property name="taskMapper" ref="taskMapper"></property>
 	</bean>
-	
-	<bean id="taskMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+
+	<bean id="taskMapper"
+		class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
-		<property name="mapperInterface" value="com.skmisk.todolist.mapper.TaskMapper"></property>
+		<property name="mapperInterface"
+			value="com.skmisk.todolist.mapper.TaskMapper"></property>
 	</bean>
-	
-	<bean id="User" class="com.skmisk.todolist.entity.User" scope = "singleton">
+
+	<bean id="User" class="com.skmisk.todolist.entity.User"
+		scope="singleton">
 		<property name="name" value="testname"></property>
+	</bean>
+
+
+
+
+	<bean
+		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
+		<property name="proxyTargetClass" value="true"></property>
+		<property name="usePrefix" value="true"></property>
+
+	</bean>
+	<bean
+		class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+		<property name="securityManager" ref="securityManager" />
+	</bean>
+
+	<!--第一步：直接配置一个 securityManager -->
+
+	<bean id="securityManager"
+		class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+
+
+		<!--刚配置时，先把这条注释掉，等后面写了MyRealm.java时，再把它的注释去掉，因为如果没有去掉就会在 tomcat开启时报一个错误 -->
+
+		<property name="realm" ref="userRealm" />
+
+	</bean>
+	<bean id="userRealm" class="com.skmisk.todolist.shiro.UserRealm">
+		<property name="userService" ref="userService" />
+	</bean>
+
+	<bean id="lifecycleBeanPostProcessor"
+		class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+	<!-- 第三步：把请求路径拦截之后的处理 -->
+	<bean id="shiroFilter"
+		class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<!--shiro整个的处理，都由securityManger指定和决定 -->
+		<property name="securityManager" ref="securityManager" />
+
+		<!-- loginUrl==>如果登录成功，跳转到哪个页面，或者执行哪个请求 -->
+		<property name="loginUrl" value="/tologinpage.do" />
+
+		<!-- 验证通过执行的请求或者跳转 -->
+		<property name="successUrl" value="/home.jsp" />
+
+		<!-- 验证不通过执行的请求或者跳转 -->
+		<property name="unauthorizedUrl" value="/unauthorized.jsp" />
+
+		<!-- 具体的拦截路径和拦截的方式和角色和权限的范围 -->
+		<property name="filterChainDefinitions">
+			<value>
+				/deletetask.do = authc
+				/finishtask.do = authc
+				/addtask.do = authc
+			</value>
+		</property>
 	</bean>
 </beans>

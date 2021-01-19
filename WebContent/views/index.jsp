@@ -8,28 +8,30 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Todo list 0.1.0</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Todo list 0.1.4</title>
+<link rel="stylesheet" href="bootstrap.css">
 </head>
 <body>
-	Todo list 0.1.0
+	Todo list 0.1.4
 	<br />
 
 	<form action="addtask.do" method="post">
-	<input type="text" name="userid" value="<c:out value='${userid}'/>" />
-		代办事项: <input type="text" name="taskName" /> <br /> <input
-			type="submit" value="新增" />
+		Input a new task: <input type="text" name="taskName" /> <br /> 
+		<p align="left">
+		<input
+			type="submit" value="Add" /></p>
 		<!-- Input Todo detail <input type="text" name="taskDetail"/> <br/> -->
 
 	</form>
-	我的代办事项：
+	Todo list:
 	<br />
-	<table border="1">
+	<table border="1" class="table table-bordered table-condensed" style="width:50%">
 		<tr>
-			<th>Task id</th>
-			<th>标记完成</th>
-			<th>Task</th>
-			<th>Action</th>
-
+			<th style="width:5%">Task id</th>
+			<th style="width:10%">标记完成</th>
+			<th style="width:30%">Task</th>
+			<th style="width:5%">Action</th>
 		</tr>
 		<c:forEach var="task" items="${tasks}">
 			<tr>
@@ -46,7 +48,7 @@
 							<c:out value='${task.name }' />
 						</c:otherwise>
 					</c:choose></td>
-				<td><a href="deletetask.do?taskId=<c:out value='${task.id }'/>&userid=<c:out value='${userid}'/>">删除</a></td>
+				<td><a href="deletetask.do?taskId=<c:out value='${task.id }'/>">删除</a></td>
 			</tr>
 		</c:forEach>
 

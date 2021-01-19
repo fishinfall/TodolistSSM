@@ -25,11 +25,9 @@ public interface UserMapper {
 	
 	public void updateOrInsertTasklist(List<Task> tasks);
 	
-	public void saveTask(Task task);
 	
-	public List<Task> queryTasksByUserId(int id);
+	public int queryUserIdbyUsername(String username);
 	
-	public void deleteTask(int taskId);
 	
 	public User queryUserByUsername(String username);
 

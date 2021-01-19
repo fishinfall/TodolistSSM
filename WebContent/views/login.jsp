@@ -1,33 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Login page</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Signup</title>
+<link rel="stylesheet" href="bootstrap.min.css">
+ <link href="signin.css" rel="stylesheet">
 </head>
-<body>
-	Welcome! Please login:
-	<!-- <form action="LoginServlet" method="post">  -->
-		<form action="login.do" method="post">
-
-		Username: <input type="text" name="username"/><br/>
-		Password:  <input type="text" name="password"/><br/>
-		<input type="submit" value="提交"/>
-	</form>
-	<c:out value='${loginresponse}'/>
-	
-	Or you can sign up as below:
-	<!-- <form action="LoginServlet" method="post">  -->
-		<form action="signup.do" method="post">
-
-		Username: <input type="text" name="username"/><br/>
-		Password:  <input type="text" name="password"/><br/>
-		Repeat password： <input type="text" name="passwordrepeat"/><br/>
-		<input type="submit" value="提交"/>
-	</form>
-	<c:out value='${signupmsg}'/>
+<body class="text-center">
+	<main class="form-signin">
+		<form action="login.do">
+			<h1 class="h3 mb-3 fw-normal">Welcome to Todo list! Please sign in.</h1>
+			<label for="inputEmail" class="visually-hidden">Email address</label>
+			<input type="email" id="inputEmail" class="form-control"
+				placeholder="Email address" required autofocus name="username"> <label
+				for="inputPassword" class="visually-hidden">Password</label> <input
+				type="password" id="inputPassword" class="form-control"
+				placeholder="Password" required name="password">
+			<div class="checkbox mb-3">
+			</div>
+			<button class="w-100 btn btn-lg btn-primary" type="submit">Sign
+				in</button>
+		</form>
+		<p align="left"><font face="verdana" color="black" size="2"><c:out value="${loginresponse} "/></font></p>
+		
+		<p align="left"><a href="signuppage.do">Sign up</a></p>
+		
+	</main>
 
 </body>
 </html>

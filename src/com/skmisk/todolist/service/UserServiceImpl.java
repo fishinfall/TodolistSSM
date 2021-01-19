@@ -2,11 +2,14 @@ package com.skmisk.todolist.service;
 
 import java.util.List;
 
+import org.apache.shiro.SecurityUtils;
+
 import com.skmisk.todolist.entity.Task;
 import com.skmisk.todolist.entity.User;
 import com.skmisk.todolist.mapper.UserMapper;
+import com.skmisk.todolist.shiro.EncryptUtils;
 
-public class UserServiceImpl implements IUserService{
+public class UserServiceImpl implements UserService{
 	UserMapper userMapper;
 
 	public User queryUserById(int id) {
@@ -18,29 +21,21 @@ public class UserServiceImpl implements IUserService{
 		return userMapper;
 	}
 	
-	public void updateOrInsertTasklist(List<Task> tasks) {
-		this.userMapper.updateOrInsertTasklist(tasks);
-	}
+//	public void updateOrInsertTasklist(List<Task> tasks) {
+//		this.userMapper.updateOrInsertTasklist(tasks);
+//	}
 
 	public void setUserMapper(UserMapper userMapper) {
 		this.userMapper = userMapper;
 	}
 	
-	public void saveTask(Task task) {
-		this.userMapper.saveTask(task);
-	}
-	public List<Task> queryTasksByUserId(int id){
-		return this.userMapper.queryTasksByUserId(id);
-	}
+
 	
 	public boolean validateUser(User user) {
 		
 		return true;
 	}
 	
-	public void deleteTask(int taskId) {
-		this.userMapper.deleteTask(taskId);
-	}
 	
 	public User queryUserByUsername(String username) {
 		return this.userMapper.queryUserByUsername(username);
@@ -53,7 +48,15 @@ public class UserServiceImpl implements IUserService{
 
 	public void addUser(User user) {
 		// TODO Auto-generated method stub
+		String rawPassword = user.getPassword();
+		String encryptedPassword = EncryptUtils.getSHA256StrJava(rawPassword);
+		user.setPassword(encryptedPassword);
 		this.userMapper.addUser(user);
 	}
+	
+	public int queryUserIdbyUsername(String username) {
+		return this.userMapper.queryUserIdbyUsername(username);
+	}
+	
 
 }

@@ -3,46 +3,22 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.skmisk.todolist.mapper.UserMapper">
-	<select id="queryUserById" parameterType="int" resultType="User">
-		select user_id id, user_name name from user where user_id = #{id}
+	<select id="queryUserById" parameterType="int" resultType="com.skmisk.todolist.entity.User">
+		select user_id id, username name from user where user_id = #{id}
 	</select>
 	
-	<select id="queryUserByUsername" parameterType="String" resultType="User">
-		select user_id id, user_name username, password from user where user_name = #{username}
+	<select id="queryUserByUsername" parameterType="String" resultType="com.skmisk.todolist.entity.User">
+		select user_id id, username username, password from user where username = #{username}
 	</select>
 	
 	
-	<insert id="addUser" parameterType="User" useGeneratedKeys="true" keyProperty="id" keyColumn="user_id">
+	<insert id="addUser" parameterType="com.skmisk.todolist.entity.User" useGeneratedKeys="true" keyProperty="id" keyColumn="user_id">
 				insert into        
-        user(user_name,password) values(#{username},#{password})
+        user(username,password) values(#{username},#{password})
 	</insert>
 
-	<insert id="saveTask" parameterType="Task" useGeneratedKeys="true" keyProperty="id" keyColumn="task_id">
-				insert into
-		<!-- task(task_id, task_name,task_detail,user_id) values(#{id},#{name},#{detail},#{userId})  -->
-        
-        task(task_name,task_detail,user_id) values(#{name},#{detail},#{userId})
-	</insert>
-	
-	<delete id="deleteTask" parameterType="int" >
-		delete from task where task_id = #{taskId}
-	</delete>
-
-	<select id="queryTasksByUserId" parameterType="int"
-		resultMap="task">
-		select t.*,u.* from task t
-		inner join user u on
-		u.user_id=t.user_id
-		where
-		t.user_id=#{id}
+		<select id="queryUserIdbyUsername" parameterType="String" resultType="int">
+			select u.user_id from user u where u.username=#{username}
 	</select>
-
-
-	<resultMap type="Task" id="task">
-		<id property="id" column="task_id" />
-		<result property="name" column="task_name" />
-		<result property="detail" column="task_detail" />
-		<result property="userId" column="user_id" />
-		<result property="finished" column="finished"/>
-	</resultMap>
+	
 </mapper>
