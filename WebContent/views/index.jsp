@@ -15,8 +15,8 @@
 <body>
 	Todo list 0.1.4
 	<br />
-
-	<form action="addtask.do" method="post">
+	<a href="logout">退出</a>
+	<form action="addtask" method="post">
 		Input a new task: <input type="text" name="taskName" /> <br />
 		<p align="left">
 			<input type="submit" value="Add" />
@@ -38,7 +38,7 @@
 			<tr>
 				<td><c:out value='${task.id }' /></td>
 				<td><a
-					href="finishtask.do?taskId=<c:out value='${task.id }'/>&userid=<c:out value='${userid}'/>">
+					href="finishtask.do?taskId=<c:out value='${task.id }'/>">
 						完成 </a></td>
 				<td><c:choose>
 						<c:when test="${task.finished}">
@@ -50,7 +50,7 @@
 							<c:out value='${task.name }' />
 						</c:otherwise>
 					</c:choose></td>
-				<td><a href="deletetask.do?taskId=<c:out value='${task.id }'/>">删除</a></td>
+				<td><a href="deletetask?taskId=<c:out value='${task.id }'/>">删除</a></td>
 			</tr>
 		</c:forEach>
 

@@ -12,7 +12,7 @@
 </head>
 <body class="text-center">
 	<main class="form-signin">
-		<form action="login.do">
+		<form action="login">
 			<h1 class="h3 mb-3 fw-normal">Welcome to Todo list! Please sign in.</h1>
 			<label for="inputEmail" class="visually-hidden">Email address</label>
 			<input type="email" id="inputEmail" class="form-control"
@@ -27,7 +27,7 @@
 		</form>
 		<p align="left"><font face="verdana" color="black" size="2"><c:out value="${loginresponse} "/></font></p>
 		
-		<p align="left"><a href="signuppage.do">Sign up</a></p>
+		<p align="left"><a href="tosignup">Sign up</a></p>
 		
 	</main>
 

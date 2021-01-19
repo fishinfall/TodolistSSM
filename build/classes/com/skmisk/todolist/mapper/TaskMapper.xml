@@ -7,11 +7,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update task set finished=true where task_id = #{id}
 	</update>
 	
-	<insert id="saveTask" parameterType="com.skmisk.todolist.entity.Task" useGeneratedKeys="true" keyProperty="id" keyColumn="task_id">
+	<insert id="addTask" parameterType="com.skmisk.todolist.entity.Task" useGeneratedKeys="true" keyProperty="id" keyColumn="task_id">
 				insert into
         task(task_name,task_detail,user_id) values(#{name},#{detail},#{userId})
 	</insert>
-	
 
 	<delete id="deleteTask" parameterType="int" >
 		delete from task where task_id = #{taskId}

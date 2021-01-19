@@ -9,7 +9,7 @@ public interface TaskMapper {
 
 	public void deleteTask(int taskId);
 
-	public void saveTask(Task task);
+	public void addTask(Task task);
 
 	public List<Task> queryTasksByUserId(int id);
 	

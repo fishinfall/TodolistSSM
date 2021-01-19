@@ -24,8 +24,8 @@ public class TaskServiceImpl implements TaskService{
 		this.taskMapper.deleteTask(taskId);
 	}
 	
-	public void saveTask(Task task) {
-		this.taskMapper.saveTask(task);
+	public void addTask(Task task) {
+		this.taskMapper.addTask(task);
 	}
 	public List<Task> queryTasksByUserId(int id){
 		return this.taskMapper.queryTasksByUserId(id);

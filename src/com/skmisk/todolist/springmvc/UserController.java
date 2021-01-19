@@ -29,26 +29,20 @@ public class UserController {
 	@Autowired
 	TaskService taskService;
 
-	/*
-	 * @RequestMapping("/loginpage.do") public String loginpagerequest() {
-	 * System.out.println("request processing..."); return "login.jsp"; }
-	 */
-
-	@RequestMapping("/signuppage.do")
-	public String forwordSignup() {
+	@RequestMapping("/tosignup")
+	public String tosignup() {
 		System.out.println("signuppage processing...");
 		return "signup.jsp";
 	}
-
+	
 	@RequestMapping("/tologinpage.do")
 	public String tologinpage() {
 		System.out.println("signuppage processing...");
 		return "login.jsp";
 	}
 
-	@RequestMapping("/login.do")
-	public ModelAndView processLogin(User user) {
-		System.out.println("login processing..." + user.getUsername() + user.getPassword());
+	@RequestMapping("/login")
+	public ModelAndView login(User user) {
 		ModelAndView mv;
 		String inputUsername = user.getUsername();
 		String inputPassword = user.getPassword();
@@ -59,14 +53,9 @@ public class UserController {
 				EncryptUtils.getSHA256StrJava(inputPassword));
 		try {
 			subject.login(token);
-			User queryUser = userService.queryUserByUsername(inputUsername);
 			mv = new ModelAndView("index.jsp");
-			List<Task> tasks = taskService.queryTasksByUserId(queryUser.getId());
+			List<Task> tasks =  taskService.queryTasksByUsername(inputUsername);
 			mv.addObject("tasks", tasks);
-
-			System.out.println("user id: " + queryUser.getId());
-
-			mv.addObject("userid", queryUser.getId());
 
 			return mv;
 		} catch (UnknownAccountException e) {
@@ -80,8 +69,8 @@ public class UserController {
 		}
 	}
 
-	@RequestMapping("/signup.do")
-	public ModelAndView processSignup(User user, @RequestParam("passwordrepeat") String passwordrepeat) {
+	@RequestMapping("/signup")
+	public ModelAndView signup(User user, @RequestParam("passwordrepeat") String passwordrepeat) {
 		System.out.println("signup processing..." + user.getUsername() + user.getPassword());
 		System.out.println("password is " + passwordrepeat);
 
@@ -95,5 +84,4 @@ public class UserController {
 		}
 		return mv;
 	}
-
 }
