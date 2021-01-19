@@ -17,26 +17,28 @@
 	<br />
 
 	<form action="addtask.do" method="post">
-		Input a new task: <input type="text" name="taskName" /> <br /> 
+		Input a new task: <input type="text" name="taskName" /> <br />
 		<p align="left">
-		<input
-			type="submit" value="Add" /></p>
+			<input type="submit" value="Add" />
+		</p>
 		<!-- Input Todo detail <input type="text" name="taskDetail"/> <br/> -->
 
 	</form>
 	Todo list:
 	<br />
-	<table border="1" class="table table-bordered table-condensed" style="width:50%">
+	<table border="1" class="table table-bordered table-condensed"
+		style="width: 50%">
 		<tr>
-			<th style="width:5%">Task id</th>
-			<th style="width:10%">标记完成</th>
-			<th style="width:30%">Task</th>
-			<th style="width:5%">Action</th>
+			<th style="width: 5%">Task id</th>
+			<th style="width: 10%">标记完成</th>
+			<th style="width: 30%">Task</th>
+			<th style="width: 5%">Action</th>
 		</tr>
 		<c:forEach var="task" items="${tasks}">
 			<tr>
 				<td><c:out value='${task.id }' /></td>
-				<td><a href="finishtask.do?taskId=<c:out value='${task.id }'/>&userid=<c:out value='${userid}'/>">
+				<td><a
+					href="finishtask.do?taskId=<c:out value='${task.id }'/>&userid=<c:out value='${userid}'/>">
 						完成 </a></td>
 				<td><c:choose>
 						<c:when test="${task.finished}">
