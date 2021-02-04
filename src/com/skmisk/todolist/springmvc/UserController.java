@@ -51,6 +51,7 @@ public class UserController {
 
 		UsernamePasswordToken token = new UsernamePasswordToken(inputUsername,
 				EncryptUtils.getSHA256StrJava(inputPassword));
+		//System.out.println(token.toString());
 		try {
 			subject.login(token);
 			mv = new ModelAndView("index.jsp");
